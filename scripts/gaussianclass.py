@@ -2,10 +2,9 @@ import numpy as np
 from sklearn.datasets import load_iris
 import matplotlib.pyplot as plt
 import scipy
-from loglikelihood import logpdf_GAU_ND
-from dimensionalityreduction import getC,getCol,getMu,getRow,load_iris,init_dataset_for_binary_classification,compute_Sb_Sw
-from pca_lda_classifiers import split_db_2to1
-from plots import init_dataset
+from scripts.utils import *
+from scripts.loglikelihood import *
+
 def get_params_MVG(DTR,LTR):
     params=[]
     for i in np.unique(LTR):
@@ -51,7 +50,7 @@ def get_params_Tied_Covariance(DTR,LTR):
         mu = getMu(D0)
         params.append(mu)
     
-    _,Sw=compute_Sb_Sw(DTR,LTR,classes)
+    _,Sw=compute_Sb_Sw(DTR,LTR)
     params.append(Sw)
     return params
 def getS_Tied_Covariance(params,DVAL):
@@ -93,7 +92,7 @@ if __name__ == "__main__":
 
     print(f"The error rate for Naive Bayes is: {err*100}% and the accuracy: {accuracy*100}%")
     
-    _,Sw=compute_Sb_Sw(DTR,LTR,classes)
+    _,Sw=compute_Sb_Sw(DTR,LTR)
     params_TCG=get_params_Tied_Covariance(DTR,LTR)
     Spost=getSPost_Tied_Covariance(params_TCG,DVAL,1/3)
     predictions=Spost.argmax(axis=0)

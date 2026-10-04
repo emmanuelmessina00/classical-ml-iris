@@ -2,8 +2,7 @@
 import numpy as np
 from sklearn.datasets import load_iris
 import matplotlib.pyplot as plt
-
-from pca_lda_classifiers import getRow
+from scripts.utils import getRow
 import scipy
 
 def logpdf_GAU_ND(x, mu, C):
@@ -21,14 +20,5 @@ def loglikelihood(XND, m_ML, C_ML):
 
 
 if __name__=="__main__":
-    
-    plt.figure()
-    XPlot = np.linspace(-8, 12, 1000)
-    m = np.ones((1,1)) * 1.0
-    C = np.ones((1,1)) * 2.0
-    plt.plot(XPlot.ravel(), np.exp(logpdf_GAU_ND(getRow(XPlot), m, C)))
-    plt.show()
-
-    ll=loglikelihood(XPlot,m,C)
-    print(f"The loglikelihood is {ll}")
+    pass
     

@@ -1,12 +1,9 @@
 import numpy as np
 import scipy
 import sklearn
-from dimensionalityreduction import getCol,getRow
-from pca_lda_classifiers import split_db_2to1
-from plots import init_dataset
-from logisticreg import DCF_u,DCF_norm,compute_min_dcf, get_bayes_decision
-from gaussianclass import logpdf_GAU_ND
-from dimensionalityreduction import load_iris
+from scripts.gaussianclass import *
+
+
 def logpdf_GMM(X,gmm):
     n_cluster=len(gmm)
     S=np.zeros((n_cluster,X.shape[1]))
@@ -102,38 +99,4 @@ def LBG_constrained(X,threshold,target_components,alpha=0.1,psi=0.01):
     return gmm
 
 if __name__ == "__main__":
-    
-    D, L = sklearn.datasets.load_iris()['data'].T, sklearn.datasets.load_iris()['target']
-    (DTR, LTR), (DVAL, LVAL) = split_db_2to1(D, L)
-    n_components = [1, 2, 4, 8, 16]
-
-    # 1. Separazione del dataset di training per classe
-    DTR0 = DTR[:, LTR == 0]
-    DTR1 = DTR[:, LTR == 1]
-    DTR2 = DTR[:, LTR == 2]
-
-    for i in n_components:
-        print(f"GMM Components: {i}")
-        
-        # 2. Addestramento di un GMM SEPARATO per ogni singola classe
-        gmm0 = LBG_constrained(DTR0, threshold=1e-6, target_components=i, alpha=0.1, psi=0.01)
-        gmm1 = LBG_constrained(DTR1, threshold=1e-6, target_components=i, alpha=0.1, psi=0.01)
-        gmm2 = LBG_constrained(DTR2, threshold=1e-6, target_components=i, alpha=0.1, psi=0.01)
-        # 3. Calcolo delle log-densità marginali sul validation set (ignoriamo la matrice S)
-        _, logdens0 = logpdf_GMM(DVAL, gmm0)
-        _, logdens1 = logpdf_GMM(DVAL, gmm1)
-        _, logdens2 = logpdf_GMM(DVAL, gmm2)
-
-        # 4. Calcolo delle Log-Likelihood Ratios (LLR per classificazione binaria)
-        
-        SPost=np.vstack([logdens0,logdens1,logdens2])
-        
-        # 5. Predizione: se LLR > 0 vince la classe 1, altrimenti classe 0
-        predictions = np.argmax(SPost,axis=0)
-        
-        # Calcolo dell'accuratezza e dell'Error Rate
-        acc = np.where(predictions == LVAL, 1, 0).mean()
-        err = 1 - acc
-        
-        # Stampa formattata per maggiore chiarezza
-        print(f"Error rate: {err * 100:.2f}%\n")
+    pass
