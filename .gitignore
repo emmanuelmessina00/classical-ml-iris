@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C-extensions
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Ambienti virtuali
+.venv/
+venv/
+ENV/
+env/
+
+# File di configurazione IDE ed editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Dati e file temporanei di sistema
+.DS_Store
+Thumbs.db
+
+# Log ed output temporanei
+*.log
